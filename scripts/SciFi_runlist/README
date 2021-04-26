@@ -1,0 +1,19 @@
+					 
+		     
+SciFi_runlist.py: attempt at script to get all SciFi runs from DB	       
+
+
+
+
+apex_add_good_cosmics.py: script that prints a list of numbers (run numbers) to a csv file (list determined offline, desgined for 'good' scifi cosmics runs)
+
+
+
+
+apex_good_cosmics_table.py: script that takes from csv file created by apex_add_good_cosmics.py and get run parameterts (HV, and latency) from APEXrunlist (and HV table)
+
+
+
+
+add_SciFi_latency.py: script to add SciFi latencies to APEXrunlist
+

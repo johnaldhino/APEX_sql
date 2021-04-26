@@ -1,0 +1,11 @@
+APEX mysql scripts, desisnged for jlab computing system.
+
+
+Directories can be changed to work on local systems by altering scripts/Directories.py
+
+logfiles directory should contain halog files from begining and end of runs.
+
+scripts directory split into:
+- log_to_sql: scripts designed to get info from logfiles and insert into sql DB
+- plot: scripts that plot info from sql DB
+

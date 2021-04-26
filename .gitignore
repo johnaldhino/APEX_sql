@@ -1,0 +1,9 @@
+#ignore patterns
+
+*.sql  # sql output files
+*.csv  # csv output files
+*.txt
+*.pyc
+*_annotated
+*~
+*#
