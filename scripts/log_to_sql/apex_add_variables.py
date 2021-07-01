@@ -137,11 +137,36 @@ def APEX_get_end(runnum, In_Entries):
 
                 Var = Entry['CODA_name']
                 if line.startswith(Var) and not 'Value' in Entry:
-                    #print(f"Line {j} starts with {Var}")
-                    #print(f"line = {line}")
-                    var_p = line.find(Var) + len(Var) +1
-                    Entry['Value'] = float(line[var_p:len(line)-1])
 
+
+                    if Var == 'TIME     :':                            
+                            
+                        var_p = line.find(Var) + len(Var) + 1
+                        time = ''
+                            
+                        while line[var_p].isdigit() or line[var_p]=='.':
+                            time += line[var_p]
+                            var_p += 1
+
+                        Entry['Value'] = float(time)
+
+                        
+                        #e_count,EVENTS   :,"int(10)"
+                        #time_mins,TIME     :,"float(8,5)"
+                    
+                        #print(f"Line {j} starts with {Var}")
+                        #print(f"line = {line}")
+
+                    else:
+                    
+                        var_p = line.find(Var) + len(Var) + 1
+                        try: 
+                            Entry['Value'] = float(line[var_p:len(line)-1])
+                            if "angle" in Var:
+                                Entry['Value'] = math.degrees(Entry['Value'])
+                        except:
+                            Entry['Value'] = 'NULL'
+                            print(f"Could not find {Var}")
 
 
             j = j+1
