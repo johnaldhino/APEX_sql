@@ -4,6 +4,13 @@ APEX mysql scripts, desisnged for jlab computing system.
 Directories can be changed to work on local systems by altering scripts/Directories.py
 
 logfiles directory should contain halog files from begining and end of runs.
+	 - Start_of_run_X.epics and halog_X.epics are identical
+	    - give start of run information
+	 - halog_end_X.epics is halog_com_X.epics + End_of_Run_4668.epics
+	    - gives end of run info
+
+
+
 
 scripts directory split into:
 -
