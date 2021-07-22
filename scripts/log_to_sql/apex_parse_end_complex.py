@@ -319,7 +319,7 @@ def APEX_get_end(runnum):
     
     try:
 #        comment_file = open("/adaqfs/home/adaq/epics/runfiles_apex/halog_end_" + str(runnum) +".epics","r")
-        comment_file = open(Directories.log_file_dir + str(runnum) +".epics","r")
+        comment_file = open(Directories.log_file_dir + "halog_end_" + str(runnum) +".epics","r")
         
         ## Below lines get list of line offsets (can be used for HV)
         #        line_offset = []
@@ -375,7 +375,7 @@ def APEX_get_end(runnum):
                 if not targ_k == None and not com_k == None:
                     target_type = line[targ_k+12:(com_k-1)]
 
-                print("after targ_k etc")
+
 
                 #Run_type=Cosmics,target_type=HOME,comment_text=Cosmics test of SciFi config
 
@@ -431,7 +431,7 @@ def APEX_get_end(runnum):
                 
                 #        print(prescale)
                 
-        print("until end of comment_file stuff")
+
 
         comment_file.close()
     except IOError:
@@ -442,18 +442,18 @@ def APEX_get_end(runnum):
         return('not found','not found','not found','not found',found_com)
 
 
-    # following checks if comment fiel was found before trying to print
+    # following checks if comment file was found before trying to print
     if found_com and DEBUG:
         
-        print(start_comment)
-        print(target_type)
-        print(Run_type)
+        print(f"start_comment = {start_comment}")
+        print(f"target_type = {target_type}")
+        print(f"Run_type = {Run_type}")
 
         print(len(prescale))
         for i in range(len(prescale)):
             print(prescale[i])
 
-    print("after found and debug print statemnt")
+
         #######################################################
         # Create and execute update statement
         #######################################################
@@ -488,12 +488,12 @@ def APEX_get_end(runnum):
     for i in range(len(prescale)):
         record_to_insert.append(prescale[i])
         
-    print("reached before printing record to insert")
+        
         
     print(record_to_insert)
     print(insert_query)
 
-            #insert_query += " %s)", str(end_comment)
+    #insert_query += " %s)", str(end_comment)
 
 
 
@@ -580,7 +580,7 @@ def APEX_mysql(query_vars,query_values, HV_vars, HV_vals, runnum):
             sys.exit(1)
 
 
-        print("reached before cursor")
+
         cursor = db.cursor()
         #JW: cursor can be thought of 'pointer' to row in set of rows
 
@@ -606,9 +606,7 @@ def APEX_mysql(query_vars,query_values, HV_vars, HV_vals, runnum):
 
     if not DEBUG:
         
-        print("Reached stage before first execution")
-        cursor.execute(query_vars,query_values)
-        print("Reached stage before after execution")
+        cursor.execute(query_vars,query_values)    
 
         if DEBUG:
             print(query_vars,query_values)

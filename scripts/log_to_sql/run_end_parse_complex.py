@@ -4,8 +4,8 @@ import apex_parse_start
 
 
 #for x in range(3500,5201): # 5023 is last run
-for x in range(3500,5202): # 5023 is last run
-#for x in range(4600,4602):
+#for x in range(3500,5202): # 5023 is last run
+for x in range(4668,4669):
     print(x)
 
     if x is not None:

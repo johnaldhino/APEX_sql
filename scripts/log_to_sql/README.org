@@ -7,16 +7,7 @@ Basic structure of files:
 Directories.py: contains names of local directories (different for jlab systems)
 
 
-run_start_parse.py: should go over all runs to fill table APEXrunlist (and linked table HV_Values)
-    - Uses apex_parse_start.py
-      - fills in run, target_type, prescale factor and other variables (for mysql table)
-      - apex_parse_start.py: contains functions 
-	- APEX_get_end:  which returns a query and values for mysql and equivalents of the HVs
-	- APEX_mysql: which inserts the results from APEX_get_end into the APEXRunlist and HV_Result
-			
 					
-
-
 run_end_parse.py: goes over all runs to fill table APEXrunlist with various parameters taken from logfiles - runs apex_add_variables.py script
     - Uses apex_parse_end.py
       - beam energy, current, arm angles and momenta etc
@@ -28,4 +19,13 @@ run_end_parse.py: goes over all runs to fill table APEXrunlist with various para
 
 
 			   
+run_end_parse_complex.py: should go over all runs to fill table APEXrunlist (and linked table HV_Values)
+    - Uses apex_parse_end_complex.py
+    - similar in principal to above scripts (run_end_parse.py and apex_parse_end.py) except that it parses through variables that are slightly more complicated to exract from end of run logfile
+      - fills in run, target_type, prescale factor and other variables (for mysql table)
+      - apex_parse_end.py: contains functions 
+	- APEX_get_end:  which returns a query and values for mysql and equivalents of the HVs
+	- APEX_mysql: which inserts the results from APEX_get_end into the APEXRunlist and HV_Result
+			
+
 
