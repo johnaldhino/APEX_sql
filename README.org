@@ -9,3 +9,9 @@ scripts directory split into:
 - log_to_sql: scripts designed to get info from logfiles and insert into sql DB
 - plot: scripts that plot info from sql DB
 
+
+logfiles directory should contain halog files from begining and end of runs.
+	 - Start_of_run_X.epics and halog_X.epics are identical
+	    - give start of run information
+	 - halog_end_X.epics is halog_com_X.epics + End_of_Run_4668.epics
+	    - gives end of run info

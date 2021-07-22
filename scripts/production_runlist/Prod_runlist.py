@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 #######################################################
-# A python script to test getting SciFi runlist from Database
+# A python script to obtain production runlist
 # APEX MySQL run list.
 # Author: John Williamson
 # Created: 11 April 2019
@@ -33,7 +33,7 @@ except MySQLdb.Error:
     print("Could not connect to database. Please ensure that the paper runlist is kept up-to-date. Please email  ( jwilli@jlab.org) and include what run number this message appeared on.")
     sys.exit(1)
 
-dbQuery = 'select * from APEXrunlist where (beam_current > 2.0 OR beam_current_alt > 2.0)  AND run_type = \'Production\' order by run_number'
+dbQuery = 'select run_number from APEXrunlist where (beam_current > 2.0 OR beam_current_alt > 2.0)  AND run_type = \'Production\' AND dead_time < 50 order by run_number'
 
     
 cur = db.cursor()
@@ -46,8 +46,16 @@ results=cur.fetchall()
 
 col_names = [i[0] for i in cur.description]
 
+# write results as csv file
 fp = open('production_runlist/production_runlist.csv','w')
 myfile = csv.writer(fp)
 myfile.writerow(col_names)
 myfile.writerows(results)
 fp.close()
+
+
+# write results as text file (seperated by spaces)
+with open('production_runlist/production_runlist.txt', 'w') as fw:
+    for row in results:
+        print(row[0]) # gets only first element (run number)
+        fw.write(f"{row[0]}\n")

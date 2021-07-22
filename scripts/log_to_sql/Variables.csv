@@ -1,0 +1,13 @@
+SQL_name,CODA_name,var_type
+beam_energy_measured,Tiefenbach 6GeV Beam energy (MeV) :,"float(10,4)"
+beam_energy_set,Set Beam energy (MeV) :,"float(10,4)"
+beam_current,Beam Current :,"float(10,4)"
+beam_current_alt,L_Unew:,"float(10,4)"
+BCM_charge,R_Dnew:,"float(10,4)"
+momentumL,Left arm momentum :,"float(10,4)"
+momentumR,Right arm momentum :,"float(10,4)"
+angleL,Left arm angle :,"float(10,4)"
+angleR,Right arm angle :,"float(10,4)"
+e_count,EVENTS   :,"int(10)"
+time_mins,TIME     :,"float(8,5)"
+dead_time,DEAD TIME:,"float"

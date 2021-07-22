@@ -17,7 +17,7 @@ run_file = open('no_file_runs.txt','a')
 
 #for x in range(3500,5201): # 3009 is last run
 for x in range(3009,5023): # 5023 is last run
-# for x in range(300,4302):
+#for x in range(4568,4570):
     print(x)
 
     if x is not None:
@@ -34,12 +34,16 @@ for x in range(3009,5023): # 5023 is last run
                 text_file_found = False
         
 
+            # convert angles from radians to degrees
+
+            #if entry['CODA_name'
+                
             #apex_add_variables.APEX_mysql(str(x),Entries)
 
         
 
         if text_file_found:
-            # print(f"For run {x} Entries = {Run_Entries}")
+            #print(f"For run {x} Entries = {Run_Entries}")
             apex_add_variables.APEX_mysql(str(x),Run_Entries)
         else:
             print(f"For run {x} log file not found")

@@ -47,9 +47,9 @@ sys.path.append(Directories.python_dir)
 import MySQLdb
 from pymysql import cursors as curs
 
+import math
 
 import csv
-
 
 import copy
 
@@ -59,6 +59,14 @@ DEBUG = False
 EXIST_CHECK = False
 
 
+
+# check if variable is float (for parsing)
+def isfloat(value):
+  try:
+    float(value)
+    return True
+  except ValueError:
+    return False
 
 
 
@@ -125,9 +133,13 @@ def APEX_get_end(runnum, In_Entries):
     
         j = 0 # iterator for lines
 
-
-        for line in comment_file:    
-
+        # bool for bcm
+        
+        
+        #for line in comment_file:    
+        reader = comment_file.readlines()
+        for i in range(0,len(reader)):
+            line = reader[i]
 
             
             
@@ -137,6 +149,7 @@ def APEX_get_end(runnum, In_Entries):
 
                 Var = Entry['CODA_name']
                 if line.startswith(Var) and not 'Value' in Entry:
+                #if line.find(Var) and not 'Value' in Entry:
 
 
                     if Var == 'TIME     :':                            
@@ -149,25 +162,75 @@ def APEX_get_end(runnum, In_Entries):
                             var_p += 1
 
                         Entry['Value'] = float(time)
-
                         
-                        #e_count,EVENTS   :,"int(10)"
-                        #time_mins,TIME     :,"float(8,5)"
-                    
-                        #print(f"Line {j} starts with {Var}")
-                        #print(f"line = {line}")
+                    elif Var == 'DEAD TIME:':                            
+                            
+                        var_p = line.find(Var) + len(Var) + 1
+                        time = ''
+                            
+                        while line[var_p].isdigit() or line[var_p]=='.':
+                            time += line[var_p]
+                            var_p += 1
+
+                        if(isfloat(time)):
+                            Entry['Value'] = float(time)
+                        else:
+                            Entry['Value'] = 'NULL'
+                            print(f"Could not find {Var}")                                                        
 
                     else:
                     
                         var_p = line.find(Var) + len(Var) + 1
+
                         try: 
-                            Entry['Value'] = float(line[var_p:len(line)-1])
+                            #Entry['Value'] = float(line[var_p:len(line)-1])
+                            parsed = ''
+                            while line[var_p].isdigit() or line[var_p]=='.' or line[var_p]=='-':
+                                parsed += line[var_p]
+                                var_p += 1
+
+                            Entry['Value'] = float(parsed)
+                                
                             if "angle" in Var:
                                 Entry['Value'] = math.degrees(Entry['Value'])
                         except:
                             Entry['Value'] = 'NULL'
                             print(f"Could not find {Var}")
 
+
+
+            # get bcm accumulated charges
+            
+            if "APPROXIMATE BCM CHARGES" in line:
+                # print(f"line with bcm = {line}")
+                
+                
+                # print(f"line after bcm = {reader[i+5]}")
+
+                rdnew = 0
+                
+                bcm_line = reader[i+5]
+                bcm_found = False
+                
+                for term in bcm_line.split():
+
+                    if bcm_found:
+                        rdnew = term
+                        bcm_found = False
+
+                    if "R_Dnew" in term:
+                        bcm_found = True
+
+                        
+                #print(f"rdnew = {rdnew}")
+                
+                
+                for Entry in Entries:
+                    Var = Entry['CODA_name']
+                    if Var == 'R_Dnew:' and not 'Value' in Entry:
+                        Entry['Value'] = rdnew
+
+                        
 
             j = j+1
 
